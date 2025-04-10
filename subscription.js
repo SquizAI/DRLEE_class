@@ -1,10 +1,15 @@
 // Initialize Supabase client
 const supabaseUrl = 'https://zkiuxmgzevvgcyglecgk.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpraXV4bWd6ZXZ2Z2N5Z2xlY2drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyNDAxMzYsImV4cCI6MjA1OTgxNjEzNn0.CoSia_2aZ-zj1DAfiwzuPMBojUALssUw4CUlunLDq04';
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+// Fix: Use window.supabase to access the Supabase client library
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-// Server API base URL
-const API_URL = 'http://localhost:3000/api';
+// Server API base URL - dynamically select based on environment
+const isProduction = window.location.hostname !== 'localhost';
+const API_URL = isProduction ? '/.netlify/functions' : 'http://localhost:3000/api';
+
+// Debug info
+console.log(`Environment: ${isProduction ? 'Production' : 'Local'}, API_URL: ${API_URL}`);
 
 // Initialize Stripe
 let stripe;
