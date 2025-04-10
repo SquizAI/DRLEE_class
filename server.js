@@ -10,12 +10,19 @@ const marked = require('marked');
 // Initialize OpenAI client
 // Fix: Check if API key exists and provide better error handling
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || ''
+  apiKey: process.env.OPENAI_API_KEY || '',
+  dangerouslyAllowBrowser: true, // Allow browser usage (not recommended for production)
 });
 
 // Check if OpenAI API key is configured
 if (!process.env.OPENAI_API_KEY) {
   console.warn('Warning: OPENAI_API_KEY is not set in environment variables');
+} else {
+  console.log(`OpenAI API key detected (${process.env.OPENAI_API_KEY.substring(0, 10)}...)`); 
+  // Check if using project API key format
+  if (process.env.OPENAI_API_KEY.startsWith('sk-proj-')) {
+    console.log('Using OpenAI project API key format');
+  }
 }
 
 // Initialize Express app
@@ -356,20 +363,28 @@ async function handleSubscriptionCanceled(subscription) {
 
 // Agentic AI Chat Endpoint with structured output
 app.post('/api/chat', async (req, res) => {
+  console.log('Chat API called with body:', req.body);
   const { message, userId } = req.body;
   
   if (!message) {
+    console.log('Error: Message is required');
     return res.status(400).json({ error: 'Message is required' });
   }
 
   try {
     // Verify OpenAI API key is available
     if (!process.env.OPENAI_API_KEY) {
+      console.error('Error: OPENAI_API_KEY is not configured');
       return res.status(500).json({ 
         error: 'OpenAI API key is not configured', 
         details: 'Please set the OPENAI_API_KEY environment variable' 
       });
     }
+    
+    // Log the OpenAI key status (first few chars only for security)
+    const apiKeyFirstChars = process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY.substring(0, 5) + '...' : 'not set';
+    console.log(`Using OpenAI API key starting with: ${apiKeyFirstChars}`);
+    console.log('OpenAI API key length:', process.env.OPENAI_API_KEY ? process.env.OPENAI_API_KEY.length : 0);
 
     // Define the structured output schema for different response types
     const responseSchema = {
@@ -466,6 +481,7 @@ app.post('/api/chat', async (req, res) => {
     };
 
     // Call the OpenAI API with the structured output format
+    console.log('Calling OpenAI API...');
     const aiResponse = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
@@ -487,13 +503,24 @@ app.post('/api/chat', async (req, res) => {
           5. If the user wants to subscribe or checkout, use responseType 'checkout'
           
           Be concise, helpful, and accurate. Encourage users to sign up and subscribe to premium plans.
-          Always format your response according to the specified JSON structure.`
+          Always format your response according to this JSON schema:
+          {
+            "responseType": "generalInfo|algorithmInfo|subscriptionInfo|signupProcess|checkout",
+            "content": {
+              "title": "Your title here",
+              "message": "Your detailed response here",
+              "actionButtons": [
+                { "text": "Button text", "url": "URL to navigate to", "action": "Action description" }
+              ]
+            }
+          }`
         },
         { role: "user", content: message }
       ],
-      response_format: { type: "json_object", schema: responseSchema },
+      response_format: { type: "json_object" },
       temperature: 0.7
     });
+    console.log('OpenAI API response received');
 
     // Parse the AI response content
     const jsonResponse = JSON.parse(aiResponse.choices[0].message.content);
