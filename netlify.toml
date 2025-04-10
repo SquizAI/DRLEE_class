@@ -1,0 +1,25 @@
+[build]
+  publish = "."
+  command = ""  # No build command for static site
+
+# Handle single page application routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Environment variable placeholders (these will be overridden by Netlify)
+[build.environment]
+  # DO NOT put actual secret values here - use Netlify CLI or UI to set these
+  STRIPE_PUBLISHABLE_KEY = "placeholder"
+  APP_URL = "https://drlee-class.netlify.app"
+
+# Headers to improve security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer-when-downgrade"
+    Content-Security-Policy = "default-src 'self' https://zkiuxmgzevvgcyglecgk.supabase.co https://js.stripe.com https://api.stripe.com https://api.openai.com https://cdn.jsdelivr.net 'unsafe-inline';"
