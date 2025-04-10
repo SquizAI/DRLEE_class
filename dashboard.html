@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Algorithms - User Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="header-left">
+                <a href="index.html" class="logo">ML Algorithms</a>
+            </div>
+            <div class="header-right">
+                <div class="user-profile-header">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <span id="user-name">Loading...</span>
+                        <div class="user-dropdown">
+                            <a href="#" id="profile-link"><i class="fas fa-user-circle"></i> Profile</a>
+                            <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <div class="dashboard-sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active"><a href="#overview"><i class="fas fa-home"></i> Overview</a></li>
+                    <li><a href="#algorithms"><i class="fas fa-robot"></i> Algorithms</a></li>
+                    <li><a href="#progress"><i class="fas fa-chart-line"></i> My Progress</a></li>
+                    <li><a href="subscription.html"><i class="fas fa-crown"></i> Subscription</a></li>
+                    <li><a href="merch.html"><i class="fas fa-tshirt"></i> Merchandise</a></li>
+                    <li><a href="chat.html"><i class="fas fa-comment-dots"></i> AI Chat</a></li>
+                    <li><a href="#settings"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <p>Last login: <span id="last-login">Loading...</span></p>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <section id="overview" class="dashboard-section active">
+                <h2>Welcome to Your Dashboard</h2>
+                <div class="welcome-message">
+                    <p>Hello <span id="welcome-name">there</span>, welcome to your ML Algorithms learning journey.</p>
+                </div>
+
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Algorithms Explored</h3>
+                            <p class="stat-value">1/3</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Completion Rate</h3>
+                            <p class="stat-value">33%</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Learning Time</h3>
+                            <p class="stat-value">1.5 hours</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-timeline">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p class="activity-title">Account Created</p>
+                                <p class="activity-time">Just now</p>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p class="activity-title">Started Transformers Course</p>
+                                <p class="activity-time">Just now</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recommendations">
+                    <h3>Recommended Next Steps</h3>
+                    <div class="recommendation-cards">
+                        <div class="recommendation-card">
+                            <div class="recommendation-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="recommendation-content">
+                                <h4>Continue with Transformers</h4>
+                                <p>Learn how self-attention mechanisms revolutionized NLP.</p>
+                                <a href="ml_algorithms_research/transformers/overview/transformer_overview.md" class="recommendation-link">Continue <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        <div class="recommendation-card">
+                            <div class="recommendation-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="recommendation-content">
+                                <h4>Explore XGBoost</h4>
+                                <p>Discover how gradient boosting enhances predictive models.</p>
+                                <a href="ml_algorithms_research/xgboost/overview/xgboost_overview.md" class="recommendation-link">Start Learning <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="algorithms" class="dashboard-section">
+                <h2>ML Algorithms Library</h2>
+                <p class="section-description">Explore comprehensive resources for these cutting-edge machine learning algorithms.</p>
+                
+                <div class="algorithm-grid">
+                    <div class="algorithm-card-dash">
+                        <div class="algorithm-header" style="background: linear-gradient(135deg, #564DFF, #01D2EB);">
+                            <div class="algorithm-icon-dash">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <h3>Transformer Models</h3>
+                        </div>
+                        <div class="algorithm-content-dash">
+                            <p>Revolutionary neural network architecture that powers modern AI systems through its attention mechanism.</p>
+                            <div class="algorithm-resources">
+                                <a href="ml_algorithms_research/transformers/overview/transformer_overview.md" class="resource-link"><i class="fas fa-book"></i> Overview</a>
+                                <a href="ml_algorithms_research/transformers/applications/transformer_applications.md" class="resource-link"><i class="fas fa-cogs"></i> Applications</a>
+                                <a href="ml_algorithms_research/transformers/case_studies/transformer_case_studies.md" class="resource-link"><i class="fas fa-flask"></i> Case Studies</a>
+                            </div>
+                            <div class="progress-indicator">
+                                <div class="progress-bar" style="width: 65%"></div>
+                                <span class="progress-text">65% Complete</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="algorithm-card-dash">
+                        <div class="algorithm-header" style="background: linear-gradient(135deg, #FF4E50, #F9D423);">
+                            <div class="algorithm-icon-dash">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>XGBoost</h3>
+                        </div>
+                        <div class="algorithm-content-dash">
+                            <p>Advanced implementation of gradient boosting that combines regularized models and optimized computation.</p>
+                            <div class="algorithm-resources">
+                                <a href="ml_algorithms_research/xgboost/overview/xgboost_overview.md" class="resource-link"><i class="fas fa-book"></i> Overview</a>
+                                <a href="#" class="resource-link disabled"><i class="fas fa-cogs"></i> Applications</a>
+                                <a href="#" class="resource-link disabled"><i class="fas fa-flask"></i> Case Studies</a>
+                            </div>
+                            <div class="progress-indicator">
+                                <div class="progress-bar" style="width: 20%"></div>
+                                <span class="progress-text">20% Complete</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="algorithm-card-dash">
+                        <div class="algorithm-header" style="background: linear-gradient(135deg, #834d9b, #d04ed6);">
+                            <div class="algorithm-icon-dash">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <h3>GANs</h3>
+                        </div>
+                        <div class="algorithm-content-dash">
+                            <p>Innovative architecture consisting of two competing neural networks that enable the generation of realistic data.</p>
+                            <div class="algorithm-resources">
+                                <a href="#" class="resource-link disabled"><i class="fas fa-book"></i> Overview</a>
+                                <a href="#" class="resource-link disabled"><i class="fas fa-cogs"></i> Applications</a>
+                                <a href="#" class="resource-link disabled"><i class="fas fa-flask"></i> Case Studies</a>
+                            </div>
+                            <div class="progress-indicator">
+                                <div class="progress-bar" style="width: 0%"></div>
+                                <span class="progress-text">0% Complete</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="progress" class="dashboard-section">
+                <h2>My Learning Progress</h2>
+                <p class="section-description">Track your journey through ML algorithms.</p>
+                
+                <div class="progress-overview">
+                    <div class="overall-progress">
+                        <div class="progress-circle">
+                            <svg width="120" height="120" viewBox="0 0 120 120">
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="#e6e6e6" stroke-width="12" />
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="#5D45F9" stroke-width="12" stroke-dasharray="339.3" stroke-dashoffset="237.5" />
+                                <text x="60" y="65" text-anchor="middle" font-size="20" font-weight="bold">30%</text>
+                            </svg>
+                        </div>
+                        <p>Overall Completion</p>
+                    </div>
+                    
+                    <div class="milestone-tracker">
+                        <h3>Learning Milestones</h3>
+                        <div class="milestone-list">
+                            <div class="milestone-item completed">
+                                <div class="milestone-check"><i class="fas fa-check-circle"></i></div>
+                                <div class="milestone-content">
+                                    <p class="milestone-title">Account Created</p>
+                                    <p class="milestone-desc">Started your learning journey</p>
+                                </div>
+                            </div>
+                            <div class="milestone-item active">
+                                <div class="milestone-check"><i class="fas fa-circle"></i></div>
+                                <div class="milestone-content">
+                                    <p class="milestone-title">First Algorithm</p>
+                                    <p class="milestone-desc">Complete Transformer Models section</p>
+                                </div>
+                            </div>
+                            <div class="milestone-item">
+                                <div class="milestone-check"><i class="fas fa-circle"></i></div>
+                                <div class="milestone-content">
+                                    <p class="milestone-title">Second Algorithm</p>
+                                    <p class="milestone-desc">Complete XGBoost section</p>
+                                </div>
+                            </div>
+                            <div class="milestone-item">
+                                <div class="milestone-check"><i class="fas fa-circle"></i></div>
+                                <div class="milestone-content">
+                                    <p class="milestone-title">Third Algorithm</p>
+                                    <p class="milestone-desc">Complete GANs section</p>
+                                </div>
+                            </div>
+                            <div class="milestone-item">
+                                <div class="milestone-check"><i class="fas fa-circle"></i></div>
+                                <div class="milestone-content">
+                                    <p class="milestone-title">ML Expert</p>
+                                    <p class="milestone-desc">Complete all case studies</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="settings" class="dashboard-section">
+                <h2>Account Settings</h2>
+                <p class="section-description">Manage your profile and preferences.</p>
+                
+                <div class="settings-form">
+                    <div class="settings-group">
+                        <h3>Personal Information</h3>
+                        <form id="profile-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fullname">Full Name</label>
+                                    <input type="text" id="fullname" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="bio">About Me</label>
+                                <textarea id="bio" class="form-control" rows="3" placeholder="Share a bit about yourself and your interests"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <h3>Change Password</h3>
+                        <form id="password-form">
+                            <div class="form-group">
+                                <label for="current-password">Current Password</label>
+                                <input type="password" id="current-password" class="form-control">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="new-password">New Password</label>
+                                    <input type="password" id="new-password" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm-password">Confirm New Password</label>
+                                    <input type="password" id="confirm-password" class="form-control">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                        </form>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <h3>Notification Preferences</h3>
+                        <div class="notification-options">
+                            <div class="option-item">
+                                <div class="option-label">
+                                    <p>Email Notifications</p>
+                                    <span>Receive updates on new content and learning resources</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="option-item">
+                                <div class="option-label">
+                                    <p>Progress Reminders</p>
+                                    <span>Get reminders to continue your learning journey</span>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <button id="save-preferences" class="btn btn-secondary">Save Preferences</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ML Algorithms Learning Platform</p>
+            <div class="links">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="subscription.html"><i class="fas fa-crown"></i> Subscription</a>
+                <a href="merch.html"><i class="fas fa-tshirt"></i> Merchandise</a>
+                <a href="chat.html"><i class="fas fa-comment-dots"></i> AI Chat</a>
+                <a href="https://github.com/SquizAI/DRLEE_class" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

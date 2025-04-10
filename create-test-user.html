@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Test User</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        h1 {
+            margin-bottom: 30px;
+            color: #5D45F9;
+        }
+        
+        .user-details {
+            background: #F0F5FF;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        
+        .user-details p {
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 16px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #564DFF, #01D2EB);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(93, 69, 249, 0.3);
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .success {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #065F46;
+            display: block;
+        }
+        
+        .error {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #991B1B;
+            display: block;
+        }
+        
+        .links {
+            margin-top: 30px;
+        }
+        
+        .links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #5D45F9;
+            text-decoration: none;
+        }
+        
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Test User</h1>
+        
+        <div class="user-details">
+            <p><strong>Email:</strong> test@test.com</p>
+            <p><strong>Password:</strong> test1234</p>
+            <p><strong>Name:</strong> Test User</p>
+        </div>
+        
+        <button id="create-test-user">Create Test User</button>
+        
+        <div id="status" class="status"></div>
+        
+        <div class="links">
+            <a href="index.html">Back to Home</a>
+            <a href="auth.html">Go to Login</a>
+        </div>
+    </div>
+    
+    <script>
+        // Supabase configuration
+        const SUPABASE_URL = 'https://zkiuxmgzevvgcyglecgk.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpraXV4bWd6ZXZ2Z2N5Z2xlY2drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyNDAxMzYsImV4cCI6MjA1OTgxNjEzNn0.CoSia_2aZ-zj1DAfiwzuPMBojUALssUw4CUlunLDq04';
+        let supabaseClient;
+    
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            console.log('Supabase client initialized');
+            
+            // Add event listener for create button
+            document.getElementById('create-test-user').addEventListener('click', createTestUser);
+        });
+        
+        // Function to create the test user
+        async function createTestUser() {
+            const statusElement = document.getElementById('status');
+            statusElement.className = 'status';
+            statusElement.textContent = 'Creating test user...';
+            
+            try {
+                // Create the user
+                const { data: authData, error: authError } = await supabaseClient.auth.signUp({
+                  email: 'test@test.com',
+                  password: 'test1234',
+                  options: {
+                    data: {
+                      full_name: 'Test User'
+                    }
+                  }
+                });
+                
+                if (authError) {
+                  throw authError;
+                }
+                
+                console.log('User created successfully:', authData.user.id);
+                
+                // Check if user was actually created (or if email confirmation is required)
+                if (!authData.user) {
+                    statusElement.className = 'status error';
+                    statusElement.textContent = 'Error: User data not returned. Email confirmation may be required.';
+                    return;
+                }
+                
+                // Create user profile
+                const { error: profileError } = await supabaseClient.from('profiles').insert([
+                  {
+                    id: authData.user.id,
+                    full_name: 'Test User',
+                    email: 'test@test.com',
+                    created_at: new Date().toISOString()
+                  }
+                ]);
+                
+                if (profileError) {
+                  console.error('Error creating profile:', profileError);
+                  // Continue anyway since the auth account was created
+                }
+                
+                statusElement.className = 'status success';
+                statusElement.textContent = 'Test user created successfully! You can now log in with these credentials.';
+                
+            } catch (error) {
+                console.error('Error creating test user:', error);
+                statusElement.className = 'status error';
+                
+                // Handle specific error cases
+                if (error.message.includes('already registered')) {
+                    statusElement.textContent = 'This email is already registered. You can use these credentials to log in.';
+                } else {
+                    statusElement.textContent = 'Error creating test user: ' + error.message;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

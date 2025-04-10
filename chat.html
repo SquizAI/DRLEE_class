@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Algorithms - AI Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="header-left">
+                <a href="index.html" class="logo">ML Algorithms</a>
+            </div>
+            <div class="header-right">
+                <div class="user-profile-header" id="user-profile-container">
+                    <!-- User profile will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="chat-container">
+        <div class="chat-sidebar">
+            <div class="chat-sidebar-header">
+                <h2>AI Assistant</h2>
+            </div>
+            <div class="chat-sidebar-content">
+                <div class="suggested-topics">
+                    <h3>Suggested Topics</h3>
+                    <ul class="topic-list">
+                        <li><button class="topic-button" data-topic="Tell me about the Transformers algorithm">Transformers</button></li>
+                        <li><button class="topic-button" data-topic="What is XGBoost and how does it work?">XGBoost</button></li>
+                        <li><button class="topic-button" data-topic="Explain GANs to me">GANs</button></li>
+                        <li><button class="topic-button" data-topic="What subscription plans do you offer?">Subscription Plans</button></li>
+                        <li><button class="topic-button" data-topic="How do I sign up?">Sign Up Process</button></li>
+                    </ul>
+                </div>
+                <div class="chat-info">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>AI Assistant</h4>
+                            <p>Ask me anything about ML algorithms, subscriptions, or how to get started!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-main">
+            <div class="chat-messages" id="chat-messages">
+                <div class="message assistant">
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            <h3>Welcome to ML Algorithms Learning Platform! 👋</h3>
+                            <p>I'm your AI assistant, here to help you with information about our machine learning algorithms, subscription plans, and more.</p>
+                            <p>What would you like to know about today?</p>
+                        </div>
+                        <div class="message-time">Just now</div>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <form id="chat-form">
+                    <div class="chat-input-wrapper">
+                        <input type="text" id="chat-input" placeholder="Ask me anything about ML algorithms..." autocomplete="off">
+                        <button type="submit" class="send-button">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkout-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="checkout-container">
+                <div class="checkout-header">
+                    <h2>Subscribe to <span id="plan-name">Plan</span></h2>
+                    <p>Get access to premium ML algorithm content and features</p>
+                </div>
+                <div class="checkout-body">
+                    <div class="plan-summary">
+                        <div class="plan-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="plan-details">
+                            <h3 id="checkout-plan-name">Plan Name</h3>
+                            <p class="plan-price">$<span id="plan-price">0.00</span>/month</p>
+                        </div>
+                    </div>
+                    <div class="checkout-features">
+                        <h4>What's included:</h4>
+                        <ul id="plan-features">
+                            <!-- Features will be populated dynamically -->
+                        </ul>
+                    </div>
+                    <div class="checkout-user-info" id="checkout-user-info">
+                        <!-- Will be populated with user info if logged in, or login/signup form if not -->
+                    </div>
+                    <div class="checkout-actions">
+                        <button id="checkout-button" class="checkout-button">Proceed to Checkout</button>
+                        <button id="cancel-checkout" class="cancel-button">Cancel</button>
+                    </div>
+                </div>
+                <div class="checkout-footer">
+                    <div class="secure-badge">
+                        <i class="fas fa-lock"></i> Secure checkout powered by Stripe
+                    </div>
+                    <p class="terms">By subscribing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div class="modal" id="signup-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h2>Create Your Account</h2>
+                    <p>Join the ML Algorithms Learning Platform</p>
+                </div>
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="signup">Sign Up</button>
+                    <button class="auth-tab" data-tab="login">Login</button>
+                </div>
+                <div class="auth-form-container">
+                    <form id="signup-form" class="auth-form active">
+                        <div class="form-group">
+                            <label for="signup-name">Full Name</label>
+                            <input type="text" id="signup-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-email">Email</label>
+                            <input type="email" id="signup-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="auth-button">Create Account</button>
+                        </div>
+                    </form>
+                    <form id="login-form" class="auth-form">
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="auth-button">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="chat.js"></script>
+</body>
+</html>

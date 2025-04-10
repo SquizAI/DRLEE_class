@@ -9,12 +9,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <header>
         <div class="container">
             <h1>Advanced Machine Learning Algorithms</h1>
             <p class="subtitle">Exploring cutting-edge techniques in AI and data science</p>
+            <div class="auth-nav">
+                <a href="chat.html" class="auth-btn chat"><i class="fas fa-comment-dots"></i> AI Chat</a>
+                <a href="auth.html" class="auth-btn">Login</a>
+                <a href="auth.html?tab=signup" class="auth-btn signup">Sign Up</a>
+            </div>
         </div>
     </header>
 
@@ -132,11 +138,13 @@
         <div class="container">
             <p>&copy; 2025 Advanced ML Algorithms Research Project</p>
             <div class="links">
-                <a href="https://github.com/" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-                <a href="#"><i class="fas fa-book"></i> Documentation</a>
+                <a href="chat.html"><i class="fas fa-comment-dots"></i> AI Chat</a>
+                <a href="subscription.html"><i class="fas fa-crown"></i> Subscription</a>
+                <a href="https://github.com/SquizAI/DRLEE_class" target="_blank"><i class="fab fa-github"></i> GitHub</a>
                 <a href="#"><i class="fas fa-envelope"></i> Contact</a>
             </div>
         </div>
     </footer>
+    <script src="app.js"></script>
 </body>
 </html>

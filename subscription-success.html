@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Success - ML Algorithms</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="subscription.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .success-container {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 40px;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .success-icon {
+            font-size: 80px;
+            color: #34a853;
+            margin-bottom: 20px;
+        }
+        
+        .success-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .success-message {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .success-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .success-button {
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .success-button.primary {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+        }
+        
+        .success-button.secondary {
+            background-color: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .success-button:hover {
+            opacity: 0.9;
+            transform: translateY(-3px);
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid #4285f4;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="header-left">
+                <a href="index.html" class="logo">ML Algorithms</a>
+            </div>
+            <div class="header-right">
+                <div class="user-profile-header" id="user-profile-container">
+                    <!-- User profile will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="success-container">
+        <i class="fas fa-check-circle success-icon"></i>
+        <h1 class="success-title">Subscription Complete!</h1>
+        <p class="success-message">Thank you for subscribing to our ML Algorithms Learning Platform. Your payment has been processed successfully and your account has been upgraded.</p>
+        
+        <div id="subscription-details">
+            <!-- Subscription details will be inserted here -->
+        </div>
+        
+        <div class="success-actions">
+            <a href="dashboard.html" class="success-button primary">Go to Dashboard</a>
+            <a href="index.html" class="success-button secondary">Back to Home</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ML Algorithms Learning Platform</p>
+            <div class="links">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="https://github.com/SquizAI/DRLEE_class" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Supabase client
+        const supabaseUrl = 'https://zkiuxmgzevvgcyglecgk.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpraXV4bWd6ZXZ2Z2N5Z2xlY2drIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQyNDAxMzYsImV4cCI6MjA1OTgxNjEzNn0.CoSia_2aZ-zj1DAfiwzuPMBojUALssUw4CUlunLDq04';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        
+        // API base URL
+        const API_URL = 'http://localhost:3000/api';
+        
+        // Elements
+        const loadingOverlay = document.getElementById('loading-overlay');
+        const subscriptionDetails = document.getElementById('subscription-details');
+        const userProfileContainer = document.getElementById('user-profile-container');
+        
+        // Show/hide loading
+        function showLoading() {
+            loadingOverlay.style.display = 'flex';
+        }
+        
+        function hideLoading() {
+            loadingOverlay.style.display = 'none';
+        }
+        
+        // Get URL parameters
+        function getUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                sessionId: params.get('session_id')
+            };
+        }
+        
+        // Check if user is logged in
+        async function checkAuth() {
+            showLoading();
+            
+            try {
+                const { data: { user }, error } = await supabase.auth.getUser();
+                
+                if (error || !user) {
+                    window.location.href = 'auth.html?redirect=subscription-success.html' + window.location.search;
+                    return null;
+                }
+                
+                // Get user profile
+                const { data: profile, error: profileError } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', user.id)
+                    .single();
+                    
+                if (!profileError && profile) {
+                    updateUserDisplay(user, profile);
+                    return { user, profile };
+                } else {
+                    updateUserDisplay(user);
+                    return { user };
+                }
+            } catch (error) {
+                console.error('Error checking authentication:', error);
+                return null;
+            } finally {
+                hideLoading();
+            }
+        }
+        
+        // Update user display in header
+        function updateUserDisplay(user, profile = null) {
+            if (user) {
+                userProfileContainer.innerHTML = `
+                    <span class="user-name">${profile?.full_name || user.email}</span>
+                    <a href="dashboard.html" class="dashboard-link">Dashboard</a>
+                    <button id="logout-button" class="logout-button">Logout</button>
+                `;
+                
+                // Add logout event listener
+                document.getElementById('logout-button').addEventListener('click', handleLogout);
+            } else {
+                userProfileContainer.innerHTML = `
+                    <a href="auth.html" class="login-button">Login</a>
+                `;
+            }
+        }
+        
+        // Handle logout
+        async function handleLogout() {
+            showLoading();
+            
+            try {
+                const { error } = await supabase.auth.signOut();
+                
+                if (error) {
+                    console.error('Error logging out:', error);
+                } else {
+                    window.location.href = 'index.html';
+                }
+            } catch (error) {
+                console.error('Error during logout:', error);
+            } finally {
+                hideLoading();
+            }
+        }
+        
+        // Get subscription details
+        async function getSubscriptionDetails(userId) {
+            try {
+                const response = await fetch(`${API_URL}/subscription/${userId}`);
+                return await response.json();
+            } catch (error) {
+                console.error('Error getting subscription details:', error);
+                return null;
+            }
+        }
+        
+        // Format subscription details
+        function formatSubscriptionDetails(subscription, planName) {
+            if (!subscription || subscription.status !== 'active') {
+                return `<p>We're still processing your subscription. Please check your dashboard in a few moments.</p>`;
+            }
+            
+            const endDate = new Date(subscription.currentPeriodEnd);
+            const formattedDate = endDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            return `
+                <div style="margin: 30px 0; padding: 20px; background-color: #f9f9f9; border-radius: 8px;">
+                    <h3 style="margin-bottom: 15px; color: #333;">Subscription Details</h3>
+                    <p><strong>Plan:</strong> ${planName}</p>
+                    <p><strong>Status:</strong> Active</p>
+                    <p><strong>Next billing date:</strong> ${formattedDate}</p>
+                </div>
+            `;
+        }
+        
+        // Get plan name from ID
+        function getPlanName(planId) {
+            switch (planId) {
+                case 'price_basic':
+                    return 'Basic Plan';
+                case 'price_pro':
+                    return 'Pro Plan';
+                default:
+                    return 'Custom Plan';
+            }
+        }
+        
+        // Initialize the page
+        async function init() {
+            showLoading();
+            
+            try {
+                const userData = await checkAuth();
+                
+                if (!userData) return;
+                
+                const { sessionId } = getUrlParams();
+                
+                if (!sessionId) {
+                    subscriptionDetails.innerHTML = `<p>No session information found. Please check your dashboard for subscription status.</p>`;
+                    return;
+                }
+                
+                // Get subscription details
+                const subscription = await getSubscriptionDetails(userData.user.id);
+                
+                if (subscription) {
+                    const planName = getPlanName(subscription.plan);
+                    subscriptionDetails.innerHTML = formatSubscriptionDetails(subscription, planName);
+                } else {
+                    subscriptionDetails.innerHTML = `<p>We're still processing your subscription. Please check your dashboard in a few moments.</p>`;
+                }
+            } catch (error) {
+                console.error('Error initializing page:', error);
+                subscriptionDetails.innerHTML = `<p>An error occurred while loading your subscription details. Please check your dashboard.</p>`;
+            } finally {
+                hideLoading();
+            }
+        }
+        
+        // Start the page
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

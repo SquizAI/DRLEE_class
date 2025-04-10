@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DR LEE is DA man - Official Merchandise</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="merch.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Bungee+Shade&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <div class="unicorn-container">
+        <div class="unicorn unicorn-1">
+            <div class="unicorn-body">
+                <div class="unicorn-head">
+                    <div class="unicorn-horn"></div>
+                    <div class="unicorn-eye"></div>
+                </div>
+                <div class="unicorn-tail"></div>
+            </div>
+            <div class="unicorn-legs">
+                <div class="unicorn-leg"></div>
+                <div class="unicorn-leg"></div>
+                <div class="unicorn-leg"></div>
+                <div class="unicorn-leg"></div>
+            </div>
+        </div>
+        <div class="unicorn unicorn-2">
+            <div class="unicorn-body">
+                <div class="unicorn-head">
+                    <div class="unicorn-horn"></div>
+                    <div class="unicorn-eye"></div>
+                </div>
+                <div class="unicorn-tail"></div>
+            </div>
+            <div class="unicorn-legs">
+                <div class="unicorn-leg"></div>
+                <div class="unicorn-leg"></div>
+                <div class="unicorn-leg"></div>
+                <div class="unicorn-leg"></div>
+            </div>
+        </div>
+    </div>
+
+    <header class="merch-header">
+        <div class="container">
+            <div class="header-left">
+                <a href="index.html" class="logo">ML Algorithms</a>
+            </div>
+            <div class="header-right">
+                <div class="cart-icon" id="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </div>
+                <div class="user-profile-header" id="user-profile-container">
+                    <!-- User profile will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="merch-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">"DR LEE is DA man"</h1>
+                <p class="hero-subtitle">Limited Edition T-Shirts</p>
+                <div class="hero-actions">
+                    <a href="#shop" class="hero-button">Shop Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="merch-shop" id="shop">
+        <div class="container">
+            <h2 class="section-title">Official Merchandise</h2>
+            <p class="section-desc">Express your admiration for the legendary DR LEE with our exclusive collection!</p>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-badge">Bestseller</div>
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/500x600/f8f9fa/333333?text=DR+LEE+Classic" alt="DR LEE Classic T-Shirt">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Classic Tee</h3>
+                        <p class="product-desc">The original "DR LEE is DA man" t-shirt with dancing unicorns</p>
+                        <div class="product-details">
+                            <div class="product-colors">
+                                <span class="color-option selected" style="background-color: #000000;" data-color="Black"></span>
+                                <span class="color-option" style="background-color: #ffffff; border: 1px solid #ddd;" data-color="White"></span>
+                                <span class="color-option" style="background-color: #4285f4;" data-color="Blue"></span>
+                            </div>
+                            <div class="product-sizes">
+                                <span class="size-option" data-size="S">S</span>
+                                <span class="size-option selected" data-size="M">M</span>
+                                <span class="size-option" data-size="L">L</span>
+                                <span class="size-option" data-size="XL">XL</span>
+                            </div>
+                        </div>
+                        <div class="product-price">$29.99</div>
+                        <button class="add-to-cart-button" data-product-id="classic-tee" data-product-name="Classic Tee" data-product-price="29.99">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-badge new">New</div>
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/500x600/f8f9fa/333333?text=DR+LEE+Premium" alt="DR LEE Premium T-Shirt">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Premium Tee</h3>
+                        <p class="product-desc">Ultra-soft premium tee with glitter unicorns and "DR LEE is DA man" logo</p>
+                        <div class="product-details">
+                            <div class="product-colors">
+                                <span class="color-option" style="background-color: #000000;" data-color="Black"></span>
+                                <span class="color-option selected" style="background-color: #ffffff; border: 1px solid #ddd;" data-color="White"></span>
+                                <span class="color-option" style="background-color: #4285f4;" data-color="Blue"></span>
+                            </div>
+                            <div class="product-sizes">
+                                <span class="size-option" data-size="S">S</span>
+                                <span class="size-option selected" data-size="M">M</span>
+                                <span class="size-option" data-size="L">L</span>
+                                <span class="size-option" data-size="XL">XL</span>
+                            </div>
+                        </div>
+                        <div class="product-price">$39.99</div>
+                        <button class="add-to-cart-button" data-product-id="premium-tee" data-product-name="Premium Tee" data-product-price="39.99">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-badge limited">Limited</div>
+                    <div class="product-image">
+                        <img src="https://via.placeholder.com/500x600/f8f9fa/333333?text=DR+LEE+Hoodie" alt="DR LEE Hoodie">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Hoodie</h3>
+                        <p class="product-desc">Cozy hoodie with embroidered "DR LEE is DA man" and rainbow unicorns</p>
+                        <div class="product-details">
+                            <div class="product-colors">
+                                <span class="color-option selected" style="background-color: #000000;" data-color="Black"></span>
+                                <span class="color-option" style="background-color: #767676;" data-color="Gray"></span>
+                                <span class="color-option" style="background-color: #4285f4;" data-color="Blue"></span>
+                            </div>
+                            <div class="product-sizes">
+                                <span class="size-option" data-size="S">S</span>
+                                <span class="size-option selected" data-size="M">M</span>
+                                <span class="size-option" data-size="L">L</span>
+                                <span class="size-option" data-size="XL">XL</span>
+                            </div>
+                        </div>
+                        <div class="product-price">$59.99</div>
+                        <button class="add-to-cart-button" data-product-id="hoodie" data-product-name="Hoodie" data-product-price="59.99">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="merch-features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Premium Quality</h3>
+                        <p>100% cotton, ethically sourced materials for maximum comfort</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Fast Shipping</h3>
+                        <p>Free shipping on all orders over $50, delivered within 3-5 business days</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-undo"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Easy Returns</h3>
+                        <p>30-day return policy with no questions asked</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Secure Checkout</h3>
+                        <p>Your personal data is always safe with our encrypted payment system</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="merch-testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonials-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Best t-shirt ever! The dancing unicorns are so detailed and the fabric is super comfortable. Plus, everyone knows DR LEE is indeed DA man!"</p>
+                    <div class="testimonial-author">- Alex Johnson</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"I wear my hoodie to all my ML classes and everyone asks where I got it. The unicorns are a conversation starter and the quality is amazing!"</p>
+                    <div class="testimonial-author">- Sam Taylor</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="testimonial-text">"Got this as a gift for my data science professor and he loved it! The unicorns dancing around 'DR LEE is DA man' made his day. Will order again!"</p>
+                    <div class="testimonial-author">- Jordan Williams</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart" id="close-cart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Cart items will be added here dynamically -->
+            <div class="empty-cart-message">Your cart is empty</div>
+        </div>
+        <div class="cart-summary">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button class="checkout-button" id="checkout-button">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DR LEE is DA man - Official Merchandise</p>
+            <div class="links">
+                <a href="index.html"><i class="fas fa-home"></i> ML Algorithms</a>
+                <a href="chat.html"><i class="fas fa-comment-dots"></i> AI Chat</a>
+                <a href="subscription.html"><i class="fas fa-crown"></i> Subscription</a>
+                <a href="https://github.com/SquizAI/DRLEE_class" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="merch.js"></script>
+</body>
+</html>

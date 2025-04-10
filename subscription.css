@@ -1,0 +1,349 @@
+/* Subscription Page Styles */
+.subscription-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.subscription-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.subscription-header h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.subscription-header p {
+    font-size: 18px;
+    color: #666;
+}
+
+.plans-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+}
+
+.plan-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 300px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.plan-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.plan-card.recommended {
+    border: 2px solid #4285f4;
+    transform: scale(1.05);
+}
+
+.recommended-badge {
+    position: absolute;
+    top: -15px;
+    right: 20px;
+    background-color: #4285f4;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.plan-header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.plan-header h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.price {
+    font-size: 36px;
+    font-weight: 700;
+    color: #222;
+}
+
+.price span {
+    font-size: 16px;
+    font-weight: 400;
+    color: #666;
+}
+
+.plan-features {
+    margin-bottom: 30px;
+    flex-grow: 1;
+}
+
+.plan-features ul {
+    list-style: none;
+    padding: 0;
+}
+
+.plan-features li {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #555;
+    display: flex;
+    align-items: center;
+}
+
+.plan-features i.fas.fa-check {
+    color: #4CAF50;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.plan-features i.fas.fa-times {
+    color: #F44336;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.plan-action {
+    text-align: center;
+}
+
+.plan-button {
+    width: 100%;
+    padding: 12px 0;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.free .plan-button {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.basic .plan-button {
+    background-color: #34a853;
+    color: white;
+}
+
+.pro .plan-button {
+    background-color: #4285f4;
+    color: white;
+}
+
+.plan-button:hover:not([disabled]) {
+    opacity: 0.9;
+    transform: translateY(-3px);
+}
+
+.plan-button.current {
+    background-color: #f5f5f5;
+    cursor: default;
+    color: #666;
+}
+
+/* Features Section */
+.subscription-features {
+    margin: 60px 0;
+    text-align: center;
+}
+
+.subscription-features h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.feature-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.feature-item {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+    width: calc(50% - 30px);
+    max-width: 500px;
+    display: flex;
+    align-items: flex-start;
+    transition: transform 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 24px;
+    color: #4285f4;
+    margin-right: 20px;
+    background-color: rgba(66, 133, 244, 0.1);
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-content {
+    text-align: left;
+}
+
+.feature-content h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.feature-content p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* FAQ Section */
+.subscription-faq {
+    margin: 60px 0;
+}
+
+.subscription-faq h2 {
+    font-size: 28px;
+    margin-bottom: 40px;
+    text-align: center;
+    color: #333;
+}
+
+.faq-items {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.faq-question {
+    background-color: #fff;
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-question h3 {
+    font-size: 18px;
+    margin: 0;
+    color: #333;
+}
+
+.faq-question i {
+    color: #4285f4;
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    background-color: #f9f9f9;
+    padding: 0 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.faq-item.active .faq-answer {
+    padding: 20px;
+    max-height: 200px;
+}
+
+.faq-answer p {
+    margin: 0;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Loading State */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.loading-overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #4285f4;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .plans-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .plan-card {
+        width: 100%;
+        max-width: 350px;
+        margin-bottom: 30px;
+    }
+
+    .plan-card.recommended {
+        transform: scale(1);
+    }
+
+    .feature-item {
+        width: 100%;
+    }
+}

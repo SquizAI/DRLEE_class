@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Algorithms - Subscription Plans</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="subscription.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="container">
+            <div class="header-left">
+                <a href="index.html" class="logo">ML Algorithms</a>
+            </div>
+            <div class="header-right">
+                <div class="user-profile-header" id="user-profile-container">
+                    <!-- User profile will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="subscription-container">
+        <div class="subscription-header">
+            <h1>Choose Your Learning Plan</h1>
+            <p>Unlock premium features and content with our subscription plans</p>
+        </div>
+
+        <div class="plans-container">
+            <div class="plan-card free">
+                <div class="plan-header">
+                    <h2>Free</h2>
+                    <p class="price">$0<span>/month</span></p>
+                </div>
+                <div class="plan-features">
+                    <ul>
+                        <li><i class="fas fa-check"></i> Access to Transformers content only</li>
+                        <li><i class="fas fa-check"></i> Basic dashboard</li>
+                        <li><i class="fas fa-times"></i> XGBoost and GANs content</li>
+                        <li><i class="fas fa-times"></i> Progress tracking</li>
+                        <li><i class="fas fa-times"></i> Email support</li>
+                    </ul>
+                </div>
+                <div class="plan-action">
+                    <button class="plan-button current" disabled>Current Plan</button>
+                </div>
+            </div>
+
+            <div class="plan-card basic">
+                <div class="plan-header">
+                    <h2>Basic</h2>
+                    <p class="price">$9.99<span>/month</span></p>
+                </div>
+                <div class="plan-features">
+                    <ul>
+                        <li><i class="fas fa-check"></i> Access to Transformers content</li>
+                        <li><i class="fas fa-check"></i> Access to XGBoost content</li>
+                        <li><i class="fas fa-check"></i> Basic progress tracking</li>
+                        <li><i class="fas fa-check"></i> Email support</li>
+                        <li><i class="fas fa-times"></i> GANs content</li>
+                    </ul>
+                </div>
+                <div class="plan-action">
+                    <button class="plan-button" data-plan-id="price_basic">Subscribe</button>
+                </div>
+            </div>
+
+            <div class="plan-card pro recommended">
+                <div class="recommended-badge">Recommended</div>
+                <div class="plan-header">
+                    <h2>Pro</h2>
+                    <p class="price">$19.99<span>/month</span></p>
+                </div>
+                <div class="plan-features">
+                    <ul>
+                        <li><i class="fas fa-check"></i> Access to ALL content</li>
+                        <li><i class="fas fa-check"></i> Advanced progress tracking</li>
+                        <li><i class="fas fa-check"></i> Priority email support</li>
+                        <li><i class="fas fa-check"></i> Monthly live Q&A sessions</li>
+                        <li><i class="fas fa-check"></i> Premium resources & example code</li>
+                    </ul>
+                </div>
+                <div class="plan-action">
+                    <button class="plan-button" data-plan-id="price_pro">Subscribe</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="subscription-features">
+            <h2>All Plans Include</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Code Examples</h3>
+                        <p>Real-world code implementation for all algorithms</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Completion Certificate</h3>
+                        <p>Downloadable certificate upon course completion</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Mobile Access</h3>
+                        <p>Access all content on your desktop, tablet or mobile device</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Regular Updates</h3>
+                        <p>Content updated with the latest research and techniques</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="subscription-faq">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-items">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I cancel my subscription?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can cancel your subscription at any time from your account settings. Your access will continue until the end of your billing period.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Can I switch between plans?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, you can upgrade or downgrade your plan at any time. If you upgrade, the change takes effect immediately. If you downgrade, the change takes effect at the end of your current billing period.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>Is there a free trial?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We don't offer a free trial, but you can access the Transformers content for free to get a sense of our teaching style and content quality.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What payment methods do you accept?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We accept all major credit cards (Visa, Mastercard, American Express, Discover) through our secure payment processor, Stripe.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ML Algorithms Learning Platform</p>
+            <div class="links">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="https://github.com/SquizAI/DRLEE_class" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="subscription.js"></script>
+</body>
+</html>
